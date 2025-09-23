@@ -1,10 +1,9 @@
 "use client";
 
-import { Button, FloatButton, Input, Modal, Radio, Space } from "antd";
+import { Button, FloatButton, Input, Modal, Radio } from "antd";
 import { useState } from "react";
 
 const PLAYERS_KEY = "players";
-const PLAYERS: Player[] = JSON.parse(localStorage.getItem(PLAYERS_KEY) || "[]");
 
 interface Player {
   name: string;
@@ -13,6 +12,9 @@ interface Player {
 }
 
 function ScoreSaver() {
+  const PLAYERS: Player[] = JSON.parse(
+    localStorage.getItem(PLAYERS_KEY) || "[]"
+  );
   const [players, setPlayers] = useState<Player[]>(PLAYERS);
   const [openModal, setOpenModal] = useState(false);
 

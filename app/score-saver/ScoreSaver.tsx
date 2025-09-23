@@ -1,5 +1,9 @@
 import { Button, FloatButton, message } from "antd";
-import { DollarOutlined, UndoOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  DollarOutlined,
+  UndoOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 import { AddPlayerModal } from "./AddPlayerModal";
 import { AddPointsModal } from "./AddPointsModal";
@@ -83,7 +87,7 @@ export default function ScoreSaver() {
           {contextHolder}
           <FloatButton.Group shape="circle">
             <FloatButton
-              icon={<UserOutlined />}
+              icon={<UserAddOutlined />}
               onClick={() => setOpenAddPlayerModal(true)}
             />
             <FloatButton
@@ -146,7 +150,9 @@ export default function ScoreSaver() {
             <h3 className="text-2xl font-semibold text-gray-600 mb-2">
               No players added yet
             </h3>
-            <p className="text-gray-500 mb-6">Click "Add" to get started!</p>
+            <p className="text-gray-500 mb-6">
+              Click <UserAddOutlined /> to get started!
+            </p>
           </div>
         )}
 

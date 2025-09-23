@@ -1,6 +1,8 @@
-import { Button, FloatButton, Input, Modal, Radio } from "antd";
+import { Button, FloatButton } from "antd";
+import { DollarOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { AddPlayerModal } from "./AddPlayerModal";
+import { AddPointsModal } from "./AddPointsModal";
 
 const PLAYERS_KEY = "players";
 const PLAYERS: Player[] = JSON.parse(localStorage.getItem(PLAYERS_KEY) || "[]");
@@ -13,7 +15,8 @@ interface Player {
 
 export default function ScoreSaver() {
   const [players, setPlayers] = useState<Player[]>(PLAYERS);
-  const [openModal, setOpenModal] = useState(false);
+  const [openAddPlayerModal, setOpenAddPlayerModal] = useState(false);
+  const [openPointsModal, setOpenPointsModal] = useState(false);
 
   const playersPlaying = players.filter((player) => player.isPlaying);
 
@@ -38,6 +41,22 @@ export default function ScoreSaver() {
     localStorage.setItem(PLAYERS_KEY, JSON.stringify(value));
   };
 
+  const handleSetPoints = (value: { name: string; point: number }[]) => {
+    const updatedPlayers = players.map((p) => {
+      const player = value.find((v) => v.name === p.name);
+      if (player) {
+        return { ...p, score: p.score + player.point };
+      }
+      return p;
+    });
+    handleSetPlayers(updatedPlayers);
+  };
+
+  const totalPoints = playersPlaying.reduce(
+    (sum, player) => sum + player.score,
+    0
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
       <div className="max-w-6xl mx-auto">
@@ -45,13 +64,21 @@ export default function ScoreSaver() {
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
             🏆 Score Saver
           </h1>
-          <FloatButton
-            description="Add"
-            shape="square"
-            onClick={() => setOpenModal(true)}
-            type="primary"
-            className="w-24"
-          />
+          <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg border border-blue-200">
+            <span className="text-blue-700 font-medium">
+              Total: {totalPoints} points
+            </span>
+          </div>
+          <FloatButton.Group shape="circle">
+            <FloatButton
+              icon={<UserOutlined />}
+              onClick={() => setOpenAddPlayerModal(true)}
+            />
+            <FloatButton
+              icon={<DollarOutlined />}
+              onClick={() => setOpenPointsModal(true)}
+            />
+          </FloatButton.Group>
         </div>
 
         {playersPlaying.length > 0 ? (
@@ -108,8 +135,8 @@ export default function ScoreSaver() {
         )}
 
         <AddPlayerModal
-          open={openModal}
-          onCancel={() => setOpenModal(false)}
+          open={openAddPlayerModal}
+          onCancel={() => setOpenAddPlayerModal(false)}
           players={players}
           onSetPlayers={(value) => {
             const transform = value.map((p) => ({
@@ -118,6 +145,14 @@ export default function ScoreSaver() {
             }));
             handleSetPlayers(transform);
           }}
+        />
+
+        <AddPointsModal
+          open={openPointsModal}
+          onCancel={() => setOpenPointsModal(false)}
+          players={playersPlaying.map((player) => player.name)}
+          onSetPoints={handleSetPoints}
+          totalPoints={totalPoints}
         />
       </div>
     </div>

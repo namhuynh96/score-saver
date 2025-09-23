@@ -57,7 +57,25 @@ export function AddPlayerModal({
       open={open}
       onCancel={onCancel}
       title={"Select players to add to the game"}
-      footer={null}
+      footer={[
+        <Button onClick={onCancel} size="large" className="px-6">
+          Cancel
+        </Button>,
+        <Button
+          type="primary"
+          onClick={handleAddPlayersToTheGame}
+          size="large"
+          className="px-6 bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
+          disabled={selectedPlayers.length === 0}
+        >
+          Add{" "}
+          {selectedPlayers.length > 0
+            ? `${selectedPlayers.length} Player${
+                selectedPlayers.length !== 1 ? "s" : ""
+              }`
+            : "Players"}
+        </Button>,
+      ]}
     >
       <div className="space-y-6">
         <div>
@@ -96,26 +114,6 @@ export function AddPlayerModal({
             <Button onClick={handleAddPlayer}>Add</Button>
           </div>
           {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-        </div>
-
-        <div className="flex justify-end space-x-3 pt-4 border-t">
-          <Button onClick={onCancel} size="large" className="px-6">
-            Cancel
-          </Button>
-          <Button
-            type="primary"
-            onClick={handleAddPlayersToTheGame}
-            size="large"
-            className="px-6 bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700"
-            disabled={selectedPlayers.length === 0}
-          >
-            Add{" "}
-            {selectedPlayers.length > 0
-              ? `${selectedPlayers.length} Player${
-                  selectedPlayers.length !== 1 ? "s" : ""
-                }`
-              : "Players"}
-          </Button>
         </div>
       </div>
     </Modal>

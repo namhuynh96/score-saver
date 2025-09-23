@@ -45,7 +45,7 @@ export default function ScoreSaver() {
             🏆 Score Saver
           </h1>
           <FloatButton
-            description="ADD"
+            description="Add"
             shape="square"
             onClick={() => setOpenModal(true)}
             type="primary"
@@ -102,9 +102,7 @@ export default function ScoreSaver() {
             <h3 className="text-2xl font-semibold text-gray-600 mb-2">
               No players added yet
             </h3>
-            <p className="text-gray-500 mb-6">
-              Click "Add Players" to get started!
-            </p>
+            <p className="text-gray-500 mb-6">Click "Add" to get started!</p>
           </div>
         )}
 
@@ -158,10 +156,6 @@ function AddPlayerModal({
     const newPlayer = { name: playerInput, isPlaying: false };
     setPlayers([...players, newPlayer]);
     setPlayerInput("");
-    // localStorage.setItem(
-    //   PLAYERS_KEY,
-    //   JSON.stringify([...initialPlayers, newPlayer])
-    // );
   };
 
   const handleAddPlayersToTheGame = () => {
@@ -169,7 +163,6 @@ function AddPlayerModal({
       ...p,
       isPlaying: selectedPlayers.includes(p.name),
     }));
-    // localStorage.setItem(PLAYERS_KEY, JSON.stringify(updatedPlayers));
     onSetPlayers(updatedPlayers);
     onCancel();
   };

@@ -1,8 +1,9 @@
 import { Button, FloatButton, message } from "antd";
-import { DollarOutlined, UserOutlined } from "@ant-design/icons";
+import { DollarOutlined, UndoOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { AddPlayerModal } from "./AddPlayerModal";
 import { AddPointsModal } from "./AddPointsModal";
+import { ResetPointsModal } from "./ResetPointsModal";
 
 const PLAYERS_KEY = "players";
 const PLAYERS: Player[] = JSON.parse(localStorage.getItem(PLAYERS_KEY) || "[]");
@@ -17,6 +18,7 @@ export default function ScoreSaver() {
   const [players, setPlayers] = useState<Player[]>(PLAYERS);
   const [openAddPlayerModal, setOpenAddPlayerModal] = useState(false);
   const [openPointsModal, setOpenPointsModal] = useState(false);
+  const [openResetPointsModal, setOpenResetPointsModal] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
   const playersPlaying = players.filter((player) => player.isPlaying);
@@ -55,6 +57,12 @@ export default function ScoreSaver() {
     handleSetPlayers(updatedPlayers);
   };
 
+  const handleResetPoints = () => {
+    const updatedPlayers = players.map((p) => ({ ...p, score: 0 }));
+    handleSetPlayers(updatedPlayers);
+    messageApi.success("Reset points for all players");
+  };
+
   const totalPoints = playersPlaying.reduce(
     (sum, player) => sum + player.score,
     0
@@ -81,6 +89,10 @@ export default function ScoreSaver() {
             <FloatButton
               icon={<DollarOutlined />}
               onClick={() => setOpenPointsModal(true)}
+            />
+            <FloatButton
+              icon={<UndoOutlined />}
+              onClick={() => setOpenResetPointsModal(true)}
             />
           </FloatButton.Group>
         </div>
@@ -157,6 +169,12 @@ export default function ScoreSaver() {
           players={playersPlaying.map((player) => player.name)}
           onSetPoints={handleSetPoints}
           totalPoints={totalPoints}
+        />
+
+        <ResetPointsModal
+          open={openResetPointsModal}
+          onCancel={() => setOpenResetPointsModal(false)}
+          onResetPoints={handleResetPoints}
         />
       </div>
     </div>

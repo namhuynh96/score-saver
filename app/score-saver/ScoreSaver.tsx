@@ -1,4 +1,4 @@
-import { Button, FloatButton } from "antd";
+import { Button, FloatButton, message } from "antd";
 import { DollarOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { AddPlayerModal } from "./AddPlayerModal";
@@ -17,6 +17,7 @@ export default function ScoreSaver() {
   const [players, setPlayers] = useState<Player[]>(PLAYERS);
   const [openAddPlayerModal, setOpenAddPlayerModal] = useState(false);
   const [openPointsModal, setOpenPointsModal] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const playersPlaying = players.filter((player) => player.isPlaying);
 
@@ -26,6 +27,7 @@ export default function ScoreSaver() {
     );
     localStorage.setItem(PLAYERS_KEY, JSON.stringify(updatedPlayers));
     setPlayers(updatedPlayers);
+    messageApi.success("Add 10 points to " + player.name);
   };
 
   const handleClickSubtractScore = (player: Player) => {
@@ -34,6 +36,7 @@ export default function ScoreSaver() {
     );
     localStorage.setItem(PLAYERS_KEY, JSON.stringify(updatedPlayers));
     setPlayers(updatedPlayers);
+    messageApi.success("Subtract 10 points from " + player.name);
   };
 
   const handleSetPlayers = (value: Player[]) => {
@@ -69,6 +72,7 @@ export default function ScoreSaver() {
               Total: {totalPoints} points
             </span>
           </div>
+          {contextHolder}
           <FloatButton.Group shape="circle">
             <FloatButton
               icon={<UserOutlined />}

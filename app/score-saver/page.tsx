@@ -13,7 +13,7 @@ interface Player {
 
 function ScoreSaver() {
   const PLAYERS: Player[] = JSON.parse(
-    localStorage.getItem(PLAYERS_KEY) || "[]"
+    window?.localStorage?.getItem(PLAYERS_KEY) || "[]"
   );
   const [players, setPlayers] = useState<Player[]>(PLAYERS);
   const [openModal, setOpenModal] = useState(false);

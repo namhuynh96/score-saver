@@ -143,6 +143,7 @@ function AddPlayerModal({
   );
   const [players, setPlayers] = useState(initialPlayers);
   const [playerInput, setPlayerInput] = useState("");
+  const [error, setError] = useState("");
 
   const handleSelectPlayer = (player: string) => {
     const updatedList = selectedPlayers.includes(player)
@@ -152,10 +153,16 @@ function AddPlayerModal({
   };
 
   const handleAddPlayer = () => {
-    if (playerInput.trim() === "") return;
-    const newPlayer = { name: playerInput, isPlaying: false };
+    const playerName = playerInput.trim();
+    if (playerName === "") return;
+    if (players.some((p) => p.name === playerName)) {
+      setError("Player already exists");
+      return;
+    }
+    const newPlayer = { name: playerName, isPlaying: false };
     setPlayers([...players, newPlayer]);
     setPlayerInput("");
+    setError("");
   };
 
   const handleAddPlayersToTheGame = () => {
@@ -210,6 +217,7 @@ function AddPlayerModal({
             />
             <Button onClick={handleAddPlayer}>Add</Button>
           </div>
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
         </div>
 
         <div className="flex justify-end space-x-3 pt-4 border-t">

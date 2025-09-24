@@ -60,30 +60,51 @@ export function AddPointsModal({
       <div className="space-y-3">
         {players
           .sort((a, b) => b.score - a.score)
-          .map((player) => (
+          .map((player, index) => (
             <div
               key={player.name}
-              className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200 shadow-sm"
+              className={`relative p-2 rounded-lg border-2 shadow-sm transition-all duration-200 ${
+                index === 0
+                  ? "bg-gradient-to-r from-yellow-50 to-orange-50 border-yellow-300 shadow-md"
+                  : "bg-gradient-to-r from-green-50 to-blue-50 border-green-200"
+              }`}
             >
-              <div className="flex items-center space-x-3">
-                {mapAvatar(player.name) ? (
-                  <div>
-                    <Avatar src={mapAvatar(player.name)} size={50} />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  {mapAvatar(player.name) ? (
+                    <Avatar
+                      src={mapAvatar(player.name)}
+                      size={40}
+                      className="shadow-sm"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                      {player.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <div className="ml-2">
+                    <div className="font-semibold text-gray-800 text-sm">
+                      {player.name}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {index === 0
+                        ? "🥇 Winner!"
+                        : `${index + 1}${
+                            index === 1 ? "nd" : index === 2 ? "rd" : "th"
+                          } place`}
+                    </div>
                   </div>
-                ) : (
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto">
-                    {player.name.charAt(0).toUpperCase()}
-                  </div>
-                )}
-                <span className="font-medium text-gray-800 text-lg">
-                  {player.name}
-                </span>
-              </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold text-green-600">
-                  {player.score}
                 </div>
-                <div className="text-xs text-gray-500">points</div>
+
+                <div className="text-right">
+                  <div
+                    className={`text-xl font-bold ${
+                      index === 0 ? "text-yellow-600" : "text-green-600"
+                    }`}
+                  >
+                    {player.score}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -110,7 +131,9 @@ export function AddPointsModal({
       title={
         <div className="text-center">
           <div className="text-2xl mb-2">🎯</div>
-          <span className="text-xl font-semibold">Add Points</span>
+          <span className="text-xl font-semibold">
+            {displayFinalPoints ? "Final Points!" : "Add Points"}
+          </span>
         </div>
       }
       footer={null}

@@ -22,10 +22,11 @@ export function ResetPointsModal({
         </div>
       }
       footer={[
-        <Button onClick={onCancel} size="large" className="px-8">
+        <Button key="cancel" onClick={onCancel} size="large" className="px-8">
           Cancel
         </Button>,
         <Button
+          key="reset"
           onClick={() => {
             onResetPoints();
             onCancel();

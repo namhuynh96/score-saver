@@ -58,10 +58,11 @@ export function AddPlayerModal({
       onCancel={onCancel}
       title={"Select players to add to the game"}
       footer={[
-        <Button onClick={onCancel} size="large" className="px-6">
+        <Button key="cancel" onClick={onCancel} size="large" className="px-6">
           Cancel
         </Button>,
         <Button
+          key="add"
           type="primary"
           onClick={handleAddPlayersToTheGame}
           size="large"

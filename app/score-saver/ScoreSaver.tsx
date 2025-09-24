@@ -77,14 +77,7 @@ export default function ScoreSaver() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            🏆 Score Saver
-          </h1>
-          <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-lg border border-blue-200">
-            <span className="text-blue-700 font-medium">
-              Total: {totalPoints} points
-            </span>
-          </div>
+          <h1 className="text-4xl font-bold text-gray-800">🏆 Score Saver</h1>
           {contextHolder}
           <FloatButton.Group shape="circle">
             <FloatButton

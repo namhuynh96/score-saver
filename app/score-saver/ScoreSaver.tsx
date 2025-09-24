@@ -1,4 +1,4 @@
-import { Button, FloatButton, message } from "antd";
+import { Avatar, Button, FloatButton, message } from "antd";
 import {
   DollarOutlined,
   UndoOutlined,
@@ -8,6 +8,7 @@ import { useState } from "react";
 import { AddPlayerModal } from "./AddPlayerModal";
 import { AddPointsModal } from "./AddPointsModal";
 import { ResetPointsModal } from "./ResetPointsModal";
+import { mapAvatar } from "./utils/mapAvatar";
 
 const PLAYERS_KEY = "players";
 const PLAYERS: Player[] = JSON.parse(localStorage.getItem(PLAYERS_KEY) || "[]");
@@ -109,15 +110,24 @@ export default function ScoreSaver() {
                 className="player-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100"
               >
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  <div className="mb-2">
+                    {mapAvatar(player.name) ? (
+                      <Avatar src={mapAvatar(player.name)} size={66} />
+                    ) : (
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto">
+                        {player.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                  </div>
+
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
                     {player.name}
                   </h3>
 
-                  <div className="mb-6">
-                    <div className="text-3xl font-bold text-blue-600 mb-2 score-update">
+                  <div className="mb-2">
+                    <div className="text-3xl font-bold text-blue-600 score-update">
                       {player.score}
                     </div>
-                    <div className="text-sm text-gray-500">points</div>
                   </div>
 
                   <div className="flex justify-center space-x-3">

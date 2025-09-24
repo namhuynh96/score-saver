@@ -1,6 +1,7 @@
-import { Button, InputNumber, Modal } from "antd";
+import { Avatar, Button, InputNumber, Modal } from "antd";
 import { useState } from "react";
 import { Player } from "./ScoreSaver";
+import { mapAvatar } from "./utils/mapAvatar";
 
 interface AddPointsModalProps {
   open: boolean;
@@ -65,9 +66,15 @@ export function AddPointsModal({
               className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200 shadow-sm"
             >
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                  {player.name.charAt(0).toUpperCase()}
-                </div>
+                {mapAvatar(player.name) ? (
+                  <div>
+                    <Avatar src={mapAvatar(player.name)} size={50} />
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto">
+                    {player.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
                 <span className="font-medium text-gray-800 text-lg">
                   {player.name}
                 </span>

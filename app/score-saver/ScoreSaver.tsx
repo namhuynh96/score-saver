@@ -12,7 +12,7 @@ import { ResetPointsModal } from "./ResetPointsModal";
 const PLAYERS_KEY = "players";
 const PLAYERS: Player[] = JSON.parse(localStorage.getItem(PLAYERS_KEY) || "[]");
 
-interface Player {
+export interface Player {
   name: string;
   score: number;
   isPlaying: boolean;
@@ -172,7 +172,7 @@ export default function ScoreSaver() {
         <AddPointsModal
           open={openPointsModal}
           onCancel={() => setOpenPointsModal(false)}
-          players={playersPlaying.map((player) => player.name)}
+          players={playersPlaying}
           onSetPoints={handleSetPoints}
           totalPoints={totalPoints}
         />

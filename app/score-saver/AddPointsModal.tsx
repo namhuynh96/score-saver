@@ -114,9 +114,18 @@ export function AddPointsModal({
         <div className="inline-flex items-center px-6 py-3 bg-green-50 rounded-lg border border-green-200">
           <span className="text-green-700 font-semibold">
             {lynkPlayer && lynkPlayer?.score < 0
-              ? `🤑 Lynk needs to pay ${Math.abs(lynkPlayer?.score)}.000₫!`
+              ? `🤑 Lynk needs to pay ${new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(Math.abs(lynkPlayer.score) * 1000)}`
               : namPlayer && namPlayer?.score > 0
-              ? `🎉 Congratulations Nam! You win ${namPlayer?.score}.000₫!`
+              ? `🎉 Congratulations Nam! You win ${new Intl.NumberFormat(
+                  "vi-VN",
+                  {
+                    style: "currency",
+                    currency: "VND",
+                  }
+                ).format(namPlayer.score * 1000)}`
               : "🎉 Happy ending!"}
           </span>
         </div>
